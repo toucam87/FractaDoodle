@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b17nudjh5g4lc"]
+
+[ext_resource type="Theme" uid="uid://c0720y8vgjxxc" path="res://Textures/main canvas theme.tres" id="1_hxnaf"]
+[ext_resource type="Script" path="res://Scenes/Drawing.gd" id="2_1fcsg"]
+
+[node name="Main Canvas Layer" type="CanvasLayer"]
+
+[node name="Background" type="Panel" parent="."]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_hxnaf")
+
+[node name="Drawing" type="Node2D" parent="."]
+script = ExtResource("2_1fcsg")
