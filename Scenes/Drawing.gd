@@ -1,17 +1,29 @@
 extends Node2D
 
-var points_to_paint = []
-
-
-func _draw() -> void:
-	for i in points_to_paint.size():
-		draw_circle(points_to_paint[i], 10, Color.BLACK)
-		
+var points_to_paint : PackedVector2Array
+var stroke_packed_scene = preload("res://Scenes/stroke.tscn")
+var new_stroke : Stroke
 
 
 func _input(event: InputEvent) -> void:
-	if Mouse.left_click_pressed:
-		points_to_paint.append(Mouse.mouse_pos)
-		queue_redraw()
-		print("mouse button pressed " + str(Mouse.mouse_pos))
+	if event.is_action_pressed("left click"):
+		new_stroke = stroke_packed_scene.instantiate() as Stroke
+		add_child(new_stroke)
+		new_stroke.name = "stroke "
+		new_stroke.configurate(Color.BLUE, 12.0, 1.0)
 	
+	if event.is_action_released("left click"):
+		new_stroke.is_painting = false
+		new_stroke = null
+		points_to_paint.clear()
+	
+	if event.is_action_pressed("right click"):
+		new_stroke = stroke_packed_scene.instantiate() as Stroke
+		add_child(new_stroke)
+		new_stroke.name = "erase stroke "
+		new_stroke.configurate(Color.WHITE, 25.0, 1.0)
+	
+	if event.is_action_released("right click"):
+		new_stroke.is_painting = false
+		new_stroke = null
+		points_to_paint.clear()

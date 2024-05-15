@@ -1,0 +1,142 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqnqg2q4v6fln"]
+
+[ext_resource type="Theme" uid="uid://c8qrom55yaurj" path="res://Textures/fractal_frame_borders.tres" id="1_7x7k8"]
+[ext_resource type="Script" path="res://Scenes/Fractal Frame Controller/fractal_frame_controller.gd" id="1_ed6ij"]
+[ext_resource type="Script" path="res://Scenes/Fractal Frame Controller/FractalFrameControllerBorder.gd" id="2_1xduq"]
+[ext_resource type="Theme" uid="uid://csrr4dwjjclyp" path="res://Textures/fractal_frame_corners.tres" id="2_2ylkq"]
+
+[node name="Fractal Frame Controller" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -960.0
+offset_bottom = -540.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+script = ExtResource("1_ed6ij")
+
+[node name="Borders" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_7x7k8")
+
+[node name="Left border" type="Panel" parent="Borders"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_right = 5.0
+grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_7x7k8")
+script = ExtResource("2_1xduq")
+
+[node name="Right Border" type="Panel" parent="Borders"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_right = 15.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(-1, 1)
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_7x7k8")
+script = ExtResource("2_1xduq")
+
+[node name="Top border" type="Panel" parent="Borders"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_7x7k8")
+script = ExtResource("2_1xduq")
+
+[node name="Bot border" type="Panel" parent="Borders"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 5.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1, -1)
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_7x7k8")
+script = ExtResource("2_1xduq")
+
+[node name="Corners" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_2ylkq")
+
+[node name="TopLeft" type="Panel" parent="Corners"]
+layout_mode = 1
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_2ylkq")
+
+[node name="TopRight" type="Panel" parent="Corners"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_2ylkq")
+
+[node name="BotLeft" type="Panel" parent="Corners"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_2ylkq")
+
+[node name="BotRight" type="Panel" parent="Corners"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_2ylkq")

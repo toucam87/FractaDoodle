@@ -5,7 +5,7 @@ content_margin_left = 0.0
 content_margin_top = 0.0
 content_margin_right = 0.0
 content_margin_bottom = 0.0
-bg_color = Color(1, 1, 1, 1)
+bg_color = Color(0.816406, 0.816406, 0.816406, 1)
 
 [resource]
 Panel/styles/panel = SubResource("StyleBoxFlat_5cbv2")

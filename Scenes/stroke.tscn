@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://vl7dhg4nvnlg"]
+
+[ext_resource type="Script" path="res://Scenes/stroke.gd" id="1_yxoh2"]
+
+[node name="Stroke" type="Node2D"]
+script = ExtResource("1_yxoh2")
