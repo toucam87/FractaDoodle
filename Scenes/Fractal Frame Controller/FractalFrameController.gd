@@ -3,7 +3,7 @@ class_name FractalFrameController
 
 
 func _ready() -> void:
-	resize(900)
+	resize(450)
 
 func resize(_height):
 	size.y = _height

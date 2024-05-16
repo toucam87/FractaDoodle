@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqnqg2q4v6fln"]
+[gd_scene load_steps=6 format=3 uid="uid://dqnqg2q4v6fln"]
 
 [ext_resource type="Theme" uid="uid://c8qrom55yaurj" path="res://Textures/fractal_frame_borders.tres" id="1_7x7k8"]
-[ext_resource type="Script" path="res://Scenes/Fractal Frame Controller/fractal_frame_controller.gd" id="1_ed6ij"]
-[ext_resource type="Script" path="res://Scenes/Fractal Frame Controller/FractalFrameControllerBorder.gd" id="2_1xduq"]
+[ext_resource type="Script" path="res://Scenes/Fractal Frame Controller/FractalFrameController.gd" id="1_ovhf8"]
 [ext_resource type="Theme" uid="uid://csrr4dwjjclyp" path="res://Textures/fractal_frame_corners.tres" id="2_2ylkq"]
+[ext_resource type="Script" path="res://Scenes/Fractal Frame Controller/FFCBorder.gd" id="3_j0w2d"]
+[ext_resource type="Script" path="res://Scenes/Fractal Frame Controller/FFCCorner.gd" id="5_mr7gx"]
 
 [node name="Fractal Frame Controller" type="Control"]
 layout_mode = 3
@@ -16,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 mouse_default_cursor_shape = 2
-script = ExtResource("1_ed6ij")
+script = ExtResource("1_ovhf8")
 
 [node name="Borders" type="Control" parent="."]
 layout_mode = 1
@@ -37,7 +38,7 @@ offset_right = 5.0
 grow_vertical = 2
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_7x7k8")
-script = ExtResource("2_1xduq")
+script = ExtResource("3_j0w2d")
 
 [node name="Right Border" type="Panel" parent="Borders"]
 layout_mode = 1
@@ -52,7 +53,7 @@ grow_vertical = 2
 scale = Vector2(-1, 1)
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_7x7k8")
-script = ExtResource("2_1xduq")
+script = ExtResource("3_j0w2d")
 
 [node name="Top border" type="Panel" parent="Borders"]
 layout_mode = 1
@@ -63,7 +64,7 @@ offset_bottom = 5.0
 grow_horizontal = 2
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_7x7k8")
-script = ExtResource("2_1xduq")
+script = ExtResource("3_j0w2d")
 
 [node name="Bot border" type="Panel" parent="Borders"]
 layout_mode = 1
@@ -78,7 +79,7 @@ grow_vertical = 0
 scale = Vector2(1, -1)
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_7x7k8")
-script = ExtResource("2_1xduq")
+script = ExtResource("3_j0w2d")
 
 [node name="Corners" type="Control" parent="."]
 layout_mode = 1
@@ -140,3 +141,4 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("2_2ylkq")
+script = ExtResource("5_mr7gx")
