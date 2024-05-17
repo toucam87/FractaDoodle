@@ -102,7 +102,7 @@ func calculate_scale_factor():
 
 func resize_and_rotate_frame(_pivot: Vector2, _angle : float, _scale: float):
 	#rotate frame
-	fractal_frame_controller.rotation = frame_start_angle + _angle
+	fractal_frame_controller.change_rotation_to(frame_start_angle + _angle)
 	#translate frame according to which corner was pulled // this translation only takes into account rotation
 	#holy shit these formulas were hard to find, but good trig and geometry skills... ugh.
 	var new_fractal_frame_position = fractal_frame_controller.position
@@ -111,35 +111,35 @@ func resize_and_rotate_frame(_pivot: Vector2, _angle : float, _scale: float):
 		CORNER_TOP_LEFT:
 			translation_vector = (-frame_start_local_diagonal + frame_start_local_diagonal.rotated(_angle)).rotated(frame_start_angle)
 			new_fractal_frame_position = frame_start_position + translation_vector
-			fractal_frame_controller.position = new_fractal_frame_position
+			fractal_frame_controller.change_position_to(new_fractal_frame_position)
 		CORNER_TOP_RIGHT:
 			translation_vector = Vector2(_pivot.length() *(sin(_angle)), _pivot.length() * (1.0 - cos(_angle))).rotated(frame_start_angle)
 			new_fractal_frame_position = frame_start_position + translation_vector
-			fractal_frame_controller.position = new_fractal_frame_position
+			fractal_frame_controller.change_position_to(new_fractal_frame_position)
 		CORNER_BOTTOM_LEFT:
 			translation_vector = Vector2(_pivot.length() *(1.0 - cos(_angle)), - _pivot.length() * sin(_angle)).rotated(frame_start_angle)
 			new_fractal_frame_position = frame_start_position + translation_vector
-			fractal_frame_controller.position = new_fractal_frame_position
+			fractal_frame_controller.change_position_to(new_fractal_frame_position)
 		CORNER_BOTTOM_RIGHT:
 			pass
 		
 	#scale frame
-	fractal_frame_controller.size = frame_start_size * _scale 
+	fractal_frame_controller.change_size_to(frame_start_size * _scale)
 	#translation due to resizing
 	translation_vector = Vector2(0,0)
 	match corner_enum:
 		CORNER_TOP_LEFT:
 			translation_vector = Vector2(_pivot.x * (1 - _scale), _pivot.y * (1 - _scale)).rotated(_angle).rotated(frame_start_angle)
 			new_fractal_frame_position += translation_vector
-			fractal_frame_controller.position = new_fractal_frame_position
+			fractal_frame_controller.change_position_to(new_fractal_frame_position)
 		CORNER_TOP_RIGHT:
 			translation_vector = Vector2(0, _pivot.y * (1 - _scale)).rotated(_angle).rotated(frame_start_angle)
 			new_fractal_frame_position += + translation_vector
-			fractal_frame_controller.position = new_fractal_frame_position
+			fractal_frame_controller.change_position_to(new_fractal_frame_position)
 		CORNER_BOTTOM_LEFT:
 			translation_vector = Vector2(_pivot.x * (1 - _scale), 0).rotated(_angle).rotated(frame_start_angle)
 			new_fractal_frame_position += translation_vector
-			fractal_frame_controller.position = new_fractal_frame_position
+			fractal_frame_controller.change_position_to(new_fractal_frame_position)
 		CORNER_BOTTOM_RIGHT:
 			pass
 	

@@ -1,16 +1,25 @@
 extends Control
 class_name FractalFrameController
 
-#TODO remove this when everything is working as expected
-@export var angles_in_rad : float
+signal frame_changed(emitter : FractalFrameController)
 
 func _ready() -> void:
-	resize(450)
+	initialize_size(450)
 
-func resize(_height):
+func initialize_size(_height):
 	size.y = _height
 	size.x = _height * 16 / 9
 
-func _process(delta: float) -> void:
-	#TODO remove this when everything is working as expected
-	angles_in_rad = rotation
+#TODO deal with the scale factor compared to whole screen when sending signal to fractal frame
+func change_size_to(_new_size : Vector2):
+	size = _new_size
+	frame_changed.emit(self)
+
+
+func change_position_to(_new_pos : Vector2):
+	position = _new_pos
+	frame_changed.emit(self)
+
+func change_rotation_to(_new_rot : float):
+	rotation = _new_rot
+	frame_changed.emit(self)

@@ -55,9 +55,6 @@ size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
 [node name="FractalFrame" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("3_bd6j6")]
-position = Vector2(1100, 450)
-rotation = 0.261799
-scale = Vector2(0.6, 0.6)
 
 [node name="FractalFrame2" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("3_bd6j6")]
 position = Vector2(700.115, 320)
@@ -78,3 +75,21 @@ offset_left = 181.0
 offset_top = 123.0
 offset_right = -728.0
 offset_bottom = -159.0
+
+[node name="Fractal Frame Controller2" parent="." instance=ExtResource("4_bx1k4")]
+offset_left = 500.0
+offset_top = 500.0
+offset_right = -409.0
+offset_bottom = 218.0
+rotation = -0.174533
+
+[node name="Fractal Frame Controller3" parent="." instance=ExtResource("4_bx1k4")]
+offset_left = 600.0
+offset_top = 600.0
+offset_right = -309.0
+offset_bottom = 318.0
+rotation = 0.349066
+
+[connection signal="frame_changed" from="Fractal Frame Controller" to="Main Viewport Container (drawing area)/main viewport/FractalFrame" method="_on_fractal_frame_controller_frame_changed"]
+[connection signal="frame_changed" from="Fractal Frame Controller2" to="Main Viewport Container (drawing area)/main viewport/FractalFrame2" method="_on_fractal_frame_controller_frame_changed"]
+[connection signal="frame_changed" from="Fractal Frame Controller3" to="Main Viewport Container (drawing area)/main viewport/FractalFrame3" method="_on_fractal_frame_controller_frame_changed"]

@@ -29,5 +29,5 @@ func _process(delta: float) -> void:
 	if is_dragging:
 		current_drag_position = Mouse.mouse_pos
 		#translates to new location according to displacement
-		fractal_frame_controller.position = frame_start_position + current_drag_position - start_drag_position
+		fractal_frame_controller.change_position_to(frame_start_position + current_drag_position - start_drag_position)
 		

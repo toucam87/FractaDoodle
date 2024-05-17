@@ -16,7 +16,8 @@ draw_center = false
 Panel/styles/panel = SubResource("StyleBoxTexture_aljk7")
 
 [node name="FractalFrame" type="Node2D"]
-scale = Vector2(0.8, 0.8)
+position = Vector2(800, 450)
+scale = Vector2(0.6, 0.6)
 script = ExtResource("1_3m0m3")
 
 [node name="fractal_view" type="Sprite2D" parent="."]
@@ -26,10 +27,10 @@ visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -960.0
-offset_top = -540.0
-offset_right = -961.0
-offset_bottom = -541.0
+offset_left = -800.0
+offset_top = -450.0
+offset_right = -800.0
+offset_bottom = -450.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_64rky")
