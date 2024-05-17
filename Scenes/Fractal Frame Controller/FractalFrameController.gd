@@ -2,6 +2,9 @@ extends Control
 class_name FractalFrameController
 
 signal frame_changed(emitter : FractalFrameController)
+@export var vertically_flipped := false
+@export var horizontally_flipped := false
+
 
 func _ready() -> void:
 	initialize_size(450)
@@ -22,4 +25,12 @@ func change_position_to(_new_pos : Vector2):
 
 func change_rotation_to(_new_rot : float):
 	rotation = _new_rot
+	frame_changed.emit(self)
+
+func flip_vertically():
+	vertically_flipped = !vertically_flipped
+	frame_changed.emit(self)
+
+func flip_horizontally():
+	horizontally_flipped = !horizontally_flipped
 	frame_changed.emit(self)

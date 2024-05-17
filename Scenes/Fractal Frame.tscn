@@ -20,9 +20,9 @@ position = Vector2(800, 450)
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_3m0m3")
 
-[node name="fractal_view" type="Sprite2D" parent="."]
+[node name="fractal_sprite" type="Sprite2D" parent="."]
 
-[node name="Panel" type="Panel" parent="fractal_view"]
+[node name="Panel" type="Panel" parent="fractal_sprite"]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0

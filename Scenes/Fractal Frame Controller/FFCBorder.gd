@@ -3,7 +3,7 @@ extends Panel
 
 
 @onready var fractal_frame_controller = $"../.." as FractalFrameController
-
+@export var side_enum : Side
 
 
 var is_dragging = false
@@ -22,7 +22,17 @@ func _gui_input(event: InputEvent) -> void:
 	if event.is_action_released("left click"):
 		is_dragging = false
 
-	
+	if event.is_action_released("right click"):
+		match side_enum:
+			SIDE_LEFT:
+				fractal_frame_controller.flip_horizontally()
+			SIDE_RIGHT:
+				fractal_frame_controller.flip_horizontally()
+			SIDE_TOP:
+				fractal_frame_controller.flip_vertically()
+			SIDE_BOTTOM:
+				fractal_frame_controller.flip_vertically()
+			
 	
 
 func _process(delta: float) -> void:
