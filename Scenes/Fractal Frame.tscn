@@ -1,7 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://df75qk2fhqfsj"]
+[gd_scene load_steps=7 format=3 uid="uid://df75qk2fhqfsj"]
 
 [ext_resource type="Script" path="res://Scenes/Fractal Frame.gd" id="1_3m0m3"]
 [ext_resource type="Texture2D" uid="uid://biw5gbdej1tvx" path="res://Textures/blue_button13.png" id="2_3a2bw"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_a5ji8"]
+blend_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vkucb"]
+blend_mode = 4
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aljk7"]
 texture = ExtResource("2_3a2bw")
@@ -16,11 +22,15 @@ draw_center = false
 Panel/styles/panel = SubResource("StyleBoxTexture_aljk7")
 
 [node name="FractalFrame" type="Node2D"]
+z_index = 2
+material = SubResource("CanvasItemMaterial_a5ji8")
 position = Vector2(800, 450)
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_3m0m3")
 
 [node name="fractal_sprite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.94902)
+material = SubResource("CanvasItemMaterial_vkucb")
 
 [node name="Panel" type="Panel" parent="fractal_sprite"]
 visible = false
