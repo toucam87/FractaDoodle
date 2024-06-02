@@ -10,7 +10,7 @@ func _input(event: InputEvent) -> void:
 		new_stroke = stroke_packed_scene.instantiate() as Stroke
 		add_child(new_stroke)
 		new_stroke.name = "stroke "
-		new_stroke.configurate(Color.GREEN_YELLOW, 12.0, 1.0)
+		new_stroke.configurate(Color.CADET_BLUE, 12.0, 1.0)
 		
 		
 	if event.is_action_released("left click"):
