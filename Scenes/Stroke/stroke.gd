@@ -32,13 +32,12 @@ func configurate(_color : Color, _thickness : float, _opacity : float, _antialia
 	if _antialias == false:
 		sub_viewport.set_msaa_2d(0)
 
-		
-	
 
 func _input(event: InputEvent) -> void:
 	if (Mouse.left_click_pressed or Mouse.right_click_pressed) and is_painting:
 			control_points.append(Mouse.mouse_pos)
 			calculate_bezier_curve()
+			#queue_redraw()
 			graphics.queue_redraw()
 			
 
@@ -46,11 +45,11 @@ func _input(event: InputEvent) -> void:
 	##drawing circles with varying thicknesses
 	#for i in points_to_draw.size():
 		#draw_circle(points_to_draw[i], varying_thicknesses[points_to_draw[i]], color)
-#
-	## drawing just the control points
-	##for i in control_points.size():
-		##draw_circle(control_points[i], varying_thicknesses[control_points[i]], Color.BLACK)
-	#
+
+	# drawing just the control points
+	#for i in control_points.size():
+		#draw_circle(control_points[i], varying_thicknesses[control_points[i]], Color.BLACK)
+	
 
 
 
@@ -142,8 +141,9 @@ func calculate_control_point_thickness(_point : Vector2, _distance_to_previous, 
 	#clamping to make sure there's always a minimum thickness and the line doesn't just disappear
 	new_thickness = clamp(new_thickness, thickness * min_thickness_percent, thickness)
 	varying_thicknesses[_point] = new_thickness
-	
-	
+
+
+
 func extrapolate_control_points():
 	points_to_draw = curve.get_baked_points()
 	if curve.point_count > 1:
@@ -158,6 +158,4 @@ func extrapolate_control_points():
 				varying_thicknesses[points_to_draw[t]] = lerp(varying_thicknesses[points_to_draw[index1]],
 				 varying_thicknesses[points_to_draw[index2]],
 				 1.0 * (t - index1) / (index2 - index1))
-	
-	
-	
+

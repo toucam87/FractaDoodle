@@ -22,7 +22,7 @@ draw_center = false
 Panel/styles/panel = SubResource("StyleBoxTexture_aljk7")
 
 [node name="FractalFrame" type="Node2D"]
-z_index = 2
+z_index = 1
 material = SubResource("CanvasItemMaterial_a5ji8")
 position = Vector2(800, 450)
 scale = Vector2(0.6, 0.6)

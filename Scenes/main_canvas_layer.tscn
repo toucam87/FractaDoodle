@@ -43,18 +43,11 @@ handle_input_locally = false
 size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
-[node name="SubviewportBackground" type="Panel" parent="Main Viewport Container (drawing area)/main viewport"]
-clip_contents = true
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_o61ju")
+[node name="Drawing" type="Node2D" parent="Main Viewport Container (drawing area)/main viewport"]
+z_index = 2
+script = ExtResource("2_1fcsg")
 
 [node name="FractalFrame" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("3_bd6j6")]
-visible = false
 
 [node name="FractalFrame2" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("3_bd6j6")]
 visible = false
@@ -68,9 +61,13 @@ position = Vector2(800, 540)
 rotation = -0.0383972
 scale = Vector2(0.345, -0.345)
 
-[node name="Drawing" type="Node2D" parent="Main Viewport Container (drawing area)/main viewport"]
-z_index = 1
-script = ExtResource("2_1fcsg")
+[node name="SubviewportBackground" type="Panel" parent="Main Viewport Container (drawing area)/main viewport"]
+clip_contents = true
+custom_minimum_size = Vector2(1600, 900)
+offset_right = 1600.0
+offset_bottom = 900.0
+mouse_filter = 2
+theme = SubResource("Theme_o61ju")
 
 [node name="Fractal Frame Controller" parent="." instance=ExtResource("4_bx1k4")]
 visible = false
