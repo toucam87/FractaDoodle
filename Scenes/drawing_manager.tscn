@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj81km20q76h1"]
+
+[ext_resource type="Script" path="res://Scenes/Stroke/DrawingManager.gd" id="1_2r6d6"]
+
+[node name="DrawingManager" type="Node2D"]
+z_index = 3
+script = ExtResource("1_2r6d6")

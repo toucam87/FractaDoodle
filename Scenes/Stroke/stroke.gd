@@ -11,32 +11,44 @@ var control_points : PackedVector2Array
 var points_to_draw : PackedVector2Array
 var color = Color.BLACK
 var thickness = 2
-#TODO have this opacity have an effect
 var opacity = 1.0
 var is_painting = true
 var varying_thicknesses := {}
 var max_velocity = 500.0
 var min_thickness_percent = 0.6
+var is_eraser := false
+var eraser_data : EraserLineData
+#signal sent whenever we are erasing, so that other strokes can listen to it
+signal erasing(_sender : Stroke)
+
+
+
 
 func _ready() -> void:
 	curve = Curve2D.new()
 
 
-func configurate(_color : Color, _thickness : float, _opacity : float, _antialias : bool = true):
+func configurate(_color : Color, _thickness : float, _opacity : float, _eraser : bool = false):
 	thickness = _thickness
 	color = _color
 	opacity = _opacity
 	stroke_subviewport_container.modulate.a = opacity
 	control_points.append(Mouse.mouse_pos)
 	calculate_bezier_curve()
-	if _antialias == false:
+	if _eraser == true:
+		is_eraser = true
+		#remove the antialias to prevent weird grey lines on the sides of the eraser
 		sub_viewport.set_msaa_2d(0)
-
+		#create a new eraser resource that all eraser strokes will use (one eraser stroke per existing non eraser stroke)
+		eraser_data = EraserLineData.new()
+		eraser_data.configurate(thickness, opacity, points_to_draw)
 
 func _input(event: InputEvent) -> void:
 	if (Mouse.left_click_pressed or Mouse.right_click_pressed) and is_painting:
 			control_points.append(Mouse.mouse_pos)
 			calculate_bezier_curve()
+			if is_eraser:
+				eraser_data.update_points(points_to_draw)
 			#queue_redraw()
 			graphics.queue_redraw()
 			
@@ -50,45 +62,6 @@ func _input(event: InputEvent) -> void:
 	#for i in control_points.size():
 		#draw_circle(control_points[i], varying_thicknesses[control_points[i]], Color.BLACK)
 	
-
-
-
-#func calculate_bezier_curve():
-	##reinitialize the curve and the thicknesses since this is going to be called every frame when the mouse is moving
-	#curve.clear_points()
-	#varying_thicknesses.clear()
-	##fill in the control points in the curve
-	#for i in control_points.size():
-		#curve.add_point(control_points[i])
-		#print("control point index " + str(i))
-	##initialize the first and last point with the base thickness (in case there are fewer than 3 points total)	
-	#varying_thicknesses[control_points[0]] = thickness
-	#varying_thicknesses[control_points[control_points.size() - 1]] = thickness
-	#
-	##in most cases there are more than 3 mouse points:
-	#if curve.point_count > 2:
-		##change the handles of the in between points
-		##to do this, I find the point right before and right after and create a vector between them.
-		##I then set the handle nodes to be proportional to the ratio of how far I am from the previous point and next point.
-		#for i in range(1, curve.point_count - 1):
-			#var from_previous_to_next = curve.get_point_position(i+1) - curve.get_point_position(i-1)
-			#var distance_to_previous = curve.get_point_position(i).distance_to(curve.get_point_position(i-1))
-			#var distance_to_next = curve.get_point_position(i).distance_to(curve.get_point_position(i+1))
-			#var ratio_to_previous = distance_to_previous / ( distance_to_previous + distance_to_next)
-			#var ratio_to_next = distance_to_next / ( distance_to_previous + distance_to_next)
-			#curve.set_point_in(i, - ratio_to_previous * from_previous_to_next / 2.0)
-			#curve.set_point_out(i, ratio_to_next * from_previous_to_next / 2.0)
-			##calculate varying thickness and store value in dictionary
-			#calculate_control_point_thickness(curve.get_point_position(i), distance_to_previous, distance_to_next)
-		##I recalculate the velocity for the first and last point, they don't have to be stuck at the max thickness.
-		#calculate_control_point_thickness(curve.get_point_position(0),
-		 #curve.get_point_position(0).distance_to(curve.get_point_position(1)),
-		 #curve.get_point_position(0).distance_to(curve.get_point_position(1)))
-		#calculate_control_point_thickness(curve.get_point_position(curve.point_count - 1),
-		 #curve.get_point_position(curve.point_count - 1).distance_to(curve.get_point_position(curve.point_count - 2)),
-		 #curve.get_point_position(curve.point_count - 1).distance_to(curve.get_point_position(curve.point_count - 2)))
-	##I linear extrapolate the thicknesses for the baked points in between the control points of the bezier curve
-	#extrapolate_control_points()
 
 #TODO optimize so it doesn't recalculate everything every frame, since it's laggy
 func calculate_bezier_curve():
@@ -159,3 +132,8 @@ func extrapolate_control_points():
 				 varying_thicknesses[points_to_draw[index2]],
 				 1.0 * (t - index1) / (index2 - index1))
 
+#I call this function adopt, because it doesn't instantiate it, it just adds it as a child
+func adopt_eraser_line(_eraser_line : EraserLine):
+	sub_viewport.add_child(_eraser_line)
+
+	

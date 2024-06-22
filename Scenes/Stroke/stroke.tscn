@@ -1,15 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://vl7dhg4nvnlg"]
+[gd_scene load_steps=5 format=3 uid="uid://vl7dhg4nvnlg"]
 
-[ext_resource type="Script" path="res://Scenes/Stroke/stroke.gd" id="1_6iwex"]
-[ext_resource type="Script" path="res://Scenes/Stroke/Graphics.gd" id="2_ykmml"]
+[ext_resource type="Script" path="res://Scenes/Stroke/Stroke.gd" id="1_qkwdv"]
+[ext_resource type="Script" path="res://Scenes/Stroke/Graphics.gd" id="2_hfnk4"]
 
 [sub_resource type="Curve2D" id="Curve2D_lfl0l"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mx58r"]
+blend_mode = 4
+
 [node name="Stroke" type="Node2D"]
-script = ExtResource("1_6iwex")
+script = ExtResource("1_qkwdv")
 curve = SubResource("Curve2D_lfl0l")
 
 [node name="Stroke Subviewport Container" type="SubViewportContainer" parent="."]
+material = SubResource("CanvasItemMaterial_mx58r")
 offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
@@ -23,4 +27,4 @@ size = Vector2i(1600, 900)
 render_target_update_mode = 4
 
 [node name="Graphics" type="Node2D" parent="Stroke Subviewport Container/SubViewport"]
-script = ExtResource("2_ykmml")
+script = ExtResource("2_hfnk4")
