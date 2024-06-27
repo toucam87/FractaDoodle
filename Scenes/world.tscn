@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmctkwodxnrs6"]
-
-[ext_resource type="PackedScene" uid="uid://b17nudjh5g4lc" path="res://Scenes/main_canvas_layer.tscn" id="1_8h1wx"]
-
-[node name="World" type="Node"]
-
-[node name="Main Canvas Layer" parent="." instance=ExtResource("1_8h1wx")]
-
-[editable path="Main Canvas Layer"]

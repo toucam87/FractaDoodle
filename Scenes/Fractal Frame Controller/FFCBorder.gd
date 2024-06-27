@@ -35,7 +35,7 @@ func _gui_input(event: InputEvent) -> void:
 			
 	
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_dragging:
 		current_drag_position = Mouse.mouse_pos
 		#translates to new location according to displacement

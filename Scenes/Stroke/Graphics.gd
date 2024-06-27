@@ -5,10 +5,6 @@ extends Node2D
 
 
 
-
-
-
-#TODO eraser not working atm, but code hree probably won't end up here
 func _draw() -> void:
 	
 	if !stroke.is_eraser:

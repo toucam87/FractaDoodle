@@ -19,6 +19,7 @@ func _input(event):
 		else:
 			lerped_mouse_positions.clear()
 		lerped_mouse_positions.append(mouse_pos)
+		#print(mouse_pos)
 	old_mouse_pos = mouse_pos
 	
 	if event.is_action_pressed("left click"):

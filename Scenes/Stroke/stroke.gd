@@ -28,11 +28,12 @@ func _ready() -> void:
 	curve = Curve2D.new()
 
 
-func configurate(_color : Color, _thickness : float, _opacity : float, _eraser : bool = false):
+func configurate(_color : Color, _thickness : float, _opacity : float, _main_viewport: SubViewport,  _eraser : bool = false):
 	thickness = _thickness
 	color = _color
 	opacity = _opacity
 	stroke_subviewport_container.modulate.a = opacity
+	sub_viewport.size = _main_viewport.size
 	control_points.append(Mouse.mouse_pos)
 	calculate_bezier_curve()
 	if _eraser == true:
@@ -43,7 +44,7 @@ func configurate(_color : Color, _thickness : float, _opacity : float, _eraser :
 		eraser_data = EraserLineData.new()
 		eraser_data.configurate(thickness, opacity, points_to_draw)
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if (Mouse.left_click_pressed or Mouse.right_click_pressed) and is_painting:
 			control_points.append(Mouse.mouse_pos)
 			calculate_bezier_curve()
@@ -136,4 +137,4 @@ func extrapolate_control_points():
 func adopt_eraser_line(_eraser_line : EraserLine):
 	sub_viewport.add_child(_eraser_line)
 
-	
+

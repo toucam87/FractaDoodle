@@ -42,7 +42,7 @@ func _gui_input(event: InputEvent) -> void:
 	
 	
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_dragging:
 		canvas_mouse_pos = Mouse.mouse_pos
 		#measure the vector from pivot to mouse position 

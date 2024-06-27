@@ -1,37 +1,43 @@
 extends Node2D
+class_name FractalFrame
 
 #NOTE: The fractal sprite has a material with blending mode set to premultiplied alpha. This gets the colors really nice and vibrant
 # instead of getting more and more grey with the repeating frames.
 
 @onready var fractal_sprite = $fractal_sprite
 @onready var panel = $fractal_sprite/Panel
+@onready var copied_viewport : SubViewport
 
-#TODO link this to the actual viewport size so it changes with it
-var viewport_size := Vector2(1600.0, 900.0)
+#the viewport size is copied from the parent viewport for fractal frame (main canvas size)
+var viewport_size :Vector2
+var viewport_texture
 
 
-
-func _ready() -> void:
-	var viewport_texture = get_viewport().get_texture()
+func setup_viewport(_viewport : SubViewport):
+	copied_viewport = _viewport
+	viewport_size = copied_viewport.size
+	viewport_texture = get_viewport().get_texture()
 	fractal_sprite.texture = ImageTexture.create_from_image( viewport_texture.get_image() )
+	
 
-	
-	
-func _process(delta: float) -> void:
+
+
+func _process(_delta: float) -> void:
 	update_texture()
 	
 
-
 func update_texture():
-	var viewport_texture = get_viewport().get_texture()
+	viewport_texture = get_viewport().get_texture()
 	fractal_sprite.texture = ImageTexture.create_from_image( viewport_texture.get_image() )
 
-#TODO have modulate of sprite be a property that can be changed through UI since it changes the level of fading/detail visible on final image 
+#TODO have modulate of fractal frame sprite be a property that can be changed through UI since it changes the level of fading/detail visible on final image 
 # with a really cool effect
+func change_opacity(_opacity: float):
+	fractal_sprite.self_modulate.a = _opacity
 
 
 
-#TODO connect from the very start so there's no frame where the two aren't the same
+
 func _on_fractal_frame_controller_frame_changed(emitter: FractalFrameController) -> void:
 	#change rotation
 	rotation = emitter.rotation

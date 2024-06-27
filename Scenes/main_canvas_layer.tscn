@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b17nudjh5g4lc"]
+[gd_scene load_steps=9 format=3 uid="uid://b17nudjh5g4lc"]
 
 [ext_resource type="Theme" uid="uid://c0720y8vgjxxc" path="res://Textures/main canvas theme.tres" id="1_hxnaf"]
+[ext_resource type="PackedScene" uid="uid://bgucji8to1y0s" path="res://Scenes/UI/ui.tscn" id="2_ce8cf"]
+[ext_resource type="Script" path="res://Scenes/SubviewportBackground.gd" id="2_dp4hk"]
 [ext_resource type="PackedScene" uid="uid://bj81km20q76h1" path="res://Scenes/drawing_manager.tscn" id="2_univ7"]
-[ext_resource type="PackedScene" uid="uid://df75qk2fhqfsj" path="res://Scenes/Fractal Frame.tscn" id="3_bd6j6"]
-[ext_resource type="PackedScene" uid="uid://dqnqg2q4v6fln" path="res://Scenes/Fractal Frame Controller/fractal_frame_controller.tscn" id="4_bx1k4"]
+[ext_resource type="PackedScene" uid="uid://wsx0h52o5f5" path="res://Scenes/Fractal Frame Controller/fractal_frame_manager.tscn" id="6_snk8a"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cm5dr"]
 blend_mode = 4
@@ -38,61 +39,36 @@ theme = ExtResource("1_hxnaf")
 [node name="SubviewportBackground" type="Panel" parent="."]
 z_as_relative = false
 material = SubResource("CanvasItemMaterial_cm5dr")
-clip_contents = true
-custom_minimum_size = Vector2(1600, 900)
+custom_minimum_size = Vector2(1600, 1080)
 offset_right = 1600.0
 offset_bottom = 900.0
 mouse_filter = 2
 theme = SubResource("Theme_o61ju")
+script = ExtResource("2_dp4hk")
+
+[node name="UI" parent="." instance=ExtResource("2_ce8cf")]
 
 [node name="Main Viewport Container (drawing area)" type="SubViewportContainer" parent="."]
-offset_right = 1920.0
+offset_right = 1600.0
 offset_bottom = 1080.0
 
 [node name="main viewport" type="SubViewport" parent="Main Viewport Container (drawing area)"]
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1600, 900)
+size = Vector2i(1600, 1080)
 render_target_update_mode = 4
 
 [node name="DrawingManager" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("2_univ7")]
 z_as_relative = false
 
-[node name="FractalFrame" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("3_bd6j6")]
+[node name="Fractal Frame Manager" parent="." instance=ExtResource("6_snk8a")]
 
-[node name="FractalFrame2" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("3_bd6j6")]
-position = Vector2(700.115, 320)
-rotation = -0.598648
-scale = Vector2(0.5, 0.5)
+[connection signal="color_changed" from="UI/MarginContainer/Main VBox container/Brush ColorPicker" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_brush_color_picker_color_changed"]
+[connection signal="value_changed" from="UI/MarginContainer/Main VBox container/Opacity HSlider" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_opacity_h_slider_value_changed"]
+[connection signal="value_changed" from="UI/MarginContainer/Main VBox container/BrushSize HSlider" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_brush_size_h_slider_value_changed"]
+[connection signal="color_changed" from="UI/MarginContainer/Main VBox container/Background ColorPickerButton" to="SubviewportBackground" method="_on_background_color_picker_button_color_changed"]
+[connection signal="value_changed" from="UI/MarginContainer/Main VBox container/Frame Opacity HSlider" to="Fractal Frame Manager" method="_on_frame_opacity_h_slider_value_changed"]
+[connection signal="button_up" from="UI/MarginContainer/Main VBox container/add_delete frames container2/Add Frame" to="Fractal Frame Manager" method="_on_add_frame_button_up"]
 
-[node name="FractalFrame3" parent="Main Viewport Container (drawing area)/main viewport" instance=ExtResource("3_bd6j6")]
-visible = false
-position = Vector2(800, 540)
-rotation = -0.0383972
-scale = Vector2(0.345, -0.345)
-
-[node name="Fractal Frame Controller" parent="." instance=ExtResource("4_bx1k4")]
-offset_left = 181.0
-offset_top = 123.0
-offset_right = -728.0
-offset_bottom = -159.0
-
-[node name="Fractal Frame Controller2" parent="." instance=ExtResource("4_bx1k4")]
-offset_left = 500.0
-offset_top = 500.0
-offset_right = -409.0
-offset_bottom = 218.0
-rotation = -0.174533
-
-[node name="Fractal Frame Controller3" parent="." instance=ExtResource("4_bx1k4")]
-visible = false
-offset_left = 600.0
-offset_top = 600.0
-offset_right = -309.0
-offset_bottom = 318.0
-rotation = 0.349066
-
-[connection signal="frame_changed" from="Fractal Frame Controller" to="Main Viewport Container (drawing area)/main viewport/FractalFrame" method="_on_fractal_frame_controller_frame_changed"]
-[connection signal="frame_changed" from="Fractal Frame Controller2" to="Main Viewport Container (drawing area)/main viewport/FractalFrame2" method="_on_fractal_frame_controller_frame_changed"]
-[connection signal="frame_changed" from="Fractal Frame Controller3" to="Main Viewport Container (drawing area)/main viewport/FractalFrame3" method="_on_fractal_frame_controller_frame_changed"]
+[editable path="UI"]
