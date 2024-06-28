@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgucji8to1y0s"]
+[gd_scene load_steps=9 format=3 uid="uid://bgucji8to1y0s"]
 
 [ext_resource type="Script" path="res://Scenes/UI/backgroundColorPicker.gd" id="1_j3xbn"]
 [ext_resource type="Script" path="res://Scenes/UI/MainColorPicker.gd" id="1_ld6bg"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://Scenes/UI/Opacity percent.gd" id="2_wjr54"]
 [ext_resource type="Script" path="res://Scenes/UI/Brush Size Pixel size.gd" id="4_ision"]
 [ext_resource type="Script" path="res://Scenes/UI/Fractal Opacity percent.gd" id="7_8pv53"]
+[ext_resource type="Script" path="res://Scenes/UI/toggle emit at ready.gd" id="7_aysbq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rvei2"]
 font_color = Color(0, 0, 0, 1)
@@ -149,7 +150,7 @@ text = "Background"
 label_settings = SubResource("LabelSettings_rvei2")
 
 [node name="spacer5" type="ColorRect" parent="MarginContainer/Main VBox container"]
-custom_minimum_size = Vector2(0, 20)
+custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 color = Color(1, 1, 1, 0)
 
@@ -159,7 +160,7 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 30
 
 [node name="Undo" type="Button" parent="MarginContainer/Main VBox container/Undo_Redo container"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 54)
 layout_mode = 2
 text = "Undo"
 
@@ -177,18 +178,21 @@ color = Color(1, 1, 1, 0)
 [node name="Clear_reset container" type="HBoxContainer" parent="MarginContainer/Main VBox container"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/separation = 30
 
-[node name="Clear Brush" type="Button" parent="MarginContainer/Main VBox container/Clear_reset container"]
+[node name="Clear Paint" type="Button" parent="MarginContainer/Main VBox container/Clear_reset container"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-text = "Clear Paint
+text = "Clear 
+Paint
 "
 
 [node name="Reset All" type="Button" parent="MarginContainer/Main VBox container/Clear_reset container"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-text = "Reset All"
+text = "Reset
+(no undo)"
 
 [node name="spacer6" type="ColorRect" parent="MarginContainer/Main VBox container"]
 custom_minimum_size = Vector2(0, 5)
@@ -250,18 +254,30 @@ color = Color(1, 1, 1, 0)
 [node name="add_delete frames container2" type="HBoxContainer" parent="MarginContainer/Main VBox container"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_constants/separation = 30
+theme_override_constants/separation = 0
 
 [node name="Add Frame" type="Button" parent="MarginContainer/Main VBox container/add_delete frames container2"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(120, 54)
 layout_mode = 2
 text = "Add Frame"
 
 [node name="Delete Frame" type="Button" parent="MarginContainer/Main VBox container/add_delete frames container2"]
+visible = false
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 text = "Delete Frame
 "
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/Main VBox container/add_delete frames container2"]
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Frames Visible toggle" type="CheckButton" parent="MarginContainer/Main VBox container/add_delete frames container2"]
+layout_mode = 2
+button_pressed = true
+text = "Frames Visible"
+script = ExtResource("7_aysbq")
 
 [node name="List of frames Container" type="VBoxContainer" parent="MarginContainer/Main VBox container"]
 layout_mode = 2

@@ -4,8 +4,8 @@ class_name FractalFrameController
 signal frame_changed(emitter : FractalFrameController)
 @export var vertically_flipped := false
 @export var horizontally_flipped := false
+var selected := false
 var fractal_frame : FractalFrame
-
 
 func initialize(_viewport : SubViewport, _fractal_frame : FractalFrame):
 	fractal_frame = _fractal_frame
@@ -46,3 +46,5 @@ func flip_vertically():
 func flip_horizontally():
 	horizontally_flipped = !horizontally_flipped
 	frame_changed.emit(self)
+
+
