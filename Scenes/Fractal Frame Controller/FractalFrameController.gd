@@ -2,18 +2,30 @@ extends Control
 class_name FractalFrameController
 
 signal frame_changed(emitter : FractalFrameController)
+signal frame_UI_deletion_requested(emitter : FractalFrameController)
+signal frame_UI_selection_requested(emitter : FractalFrameController)
 @export var vertically_flipped := false
 @export var horizontally_flipped := false
 var selected := false
 var fractal_frame : FractalFrame
+var fractal_frame_UI : FractalFrameUI
 
-func initialize(_viewport : SubViewport, _fractal_frame : FractalFrame):
+func initialize(_viewport : SubViewport, _fractal_frame : FractalFrame, _fractal_frame_UI : FractalFrameUI):
 	fractal_frame = _fractal_frame
+	fractal_frame_UI = _fractal_frame_UI
+	#connects the UI buttons
+	fractal_frame_UI.frame_ui_label.button_up.connect(_on_frame_UI_label_button_up)
+	fractal_frame_UI.frame_ui_delete_button.button_up.connect(_on_frame_UI_delete_button_up)
+	#connects the frame controller to the actual graphic frame
 	frame_changed.connect(fractal_frame._on_fractal_frame_controller_frame_changed)
+	#initializes the frame controller and makes the graphic frame comform to it
 	initialize_size(_viewport.size, 0.5)
 	initialize_position(Vector2(450.0, 270.0))
-	frame_changed.emit(self)
+	publish_change()
 
+func publish_change():
+	frame_changed.emit(self)
+	
 
 
 func initialize_size(_size : Vector2, _fraction : float):
@@ -28,23 +40,29 @@ func initialize_position(_position : Vector2):
 
 func change_size_to(_new_size : Vector2):
 	size = _new_size
-	frame_changed.emit(self)
+	publish_change()
 
 
 func change_position_to(_new_pos : Vector2):
 	position = _new_pos
-	frame_changed.emit(self)
+	publish_change()
 
 func change_rotation_to(_new_rot : float):
 	rotation = _new_rot
-	frame_changed.emit(self)
+	publish_change()
 
 func flip_vertically():
 	vertically_flipped = !vertically_flipped
-	frame_changed.emit(self)
+	publish_change()
 
 func flip_horizontally():
 	horizontally_flipped = !horizontally_flipped
-	frame_changed.emit(self)
+	publish_change()
+
+func _on_frame_UI_label_button_up():
+	frame_UI_selection_requested.emit(self)
+
+func _on_frame_UI_delete_button_up():
+	frame_UI_deletion_requested.emit(self)
 
 

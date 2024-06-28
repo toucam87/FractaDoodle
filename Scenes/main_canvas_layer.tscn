@@ -72,6 +72,7 @@ z_as_relative = false
 [connection signal="color_changed" from="UI/MarginContainer/Main VBox container/Brush ColorPicker" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_brush_color_picker_color_changed"]
 [connection signal="value_changed" from="UI/MarginContainer/Main VBox container/Opacity HSlider" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_opacity_h_slider_value_changed"]
 [connection signal="value_changed" from="UI/MarginContainer/Main VBox container/BrushSize HSlider" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_brush_size_h_slider_value_changed"]
+[connection signal="value_changed" from="UI/MarginContainer/Main VBox container/EraserSize HSlider" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_eraser_size_h_slider_value_changed"]
 [connection signal="color_changed" from="UI/MarginContainer/Main VBox container/Background ColorPickerButton" to="SubviewportBackground" method="_on_background_color_picker_button_color_changed"]
 [connection signal="button_up" from="UI/MarginContainer/Main VBox container/Clear_reset container/Clear Paint" to="Main Viewport Container (drawing area)/main viewport/DrawingManager" method="_on_clear_paint_button_up"]
 [connection signal="button_up" from="UI/MarginContainer/Main VBox container/Clear_reset container/Reset All" to="History Manager" method="_on_reset_all_button_up"]

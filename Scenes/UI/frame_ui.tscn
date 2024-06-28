@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://btnmrpraa416h"]
+
+[ext_resource type="Script" path="res://Scenes/UI/frame_ui.gd" id="1_nva3l"]
+
+[node name="frame UI" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+script = ExtResource("1_nva3l")
+
+[node name="Frame UI label" type="Button" parent="."]
+layout_mode = 2
+text = "Fractal Frame #1"
+
+[node name="Frame UI delete button" type="Button" parent="."]
+layout_mode = 2
+text = " X "
