@@ -1,8 +1,8 @@
 extends Control
 class_name FractalFrameManager
 
-@onready var drawing_manager: DrawingManager = $"../Main Viewport Container (drawing area)/main viewport/DrawingManager"
-@onready var main_viewport: SubViewport = $"../Main Viewport Container (drawing area)/main viewport"
+@onready var drawing_manager: DrawingManager = $"../Canvas viewport Container/Canvas subviewport/Drawing Viewport Container/Drawing Viewport/DrawingManager"
+@onready var drawing_viewport: SubViewport = $"../Canvas viewport Container/Canvas subviewport/Drawing Viewport Container/Drawing Viewport"
 @onready var list_of_frames_container: VBoxContainer = $"../UI/MarginContainer/Main VBox container/Frames ScrollContainer/List of frames Container"
 
 var fractal_frame_packed_scene = preload("res://Scenes/Fractal Frame Controller/Fractal Frame.tscn")
@@ -27,8 +27,8 @@ func add_frame():
 	#adds the fractal frame and spawns it under the main viewport
 	var new_fractal_frame = fractal_frame_packed_scene.instantiate() as FractalFrame
 	new_fractal_frame.name = "fractal frame " + str(frame_index)
-	main_viewport.add_child(new_fractal_frame)
-	new_fractal_frame.setup_viewport(main_viewport)
+	drawing_viewport.add_child(new_fractal_frame)
+	new_fractal_frame.setup_viewport(drawing_viewport)
 
 	#adds the fractal frame into the UI
 	var new_fractal_frame_UI = fractal_frame_UI_packed_scene.instantiate() as FractalFrameUI
@@ -48,7 +48,7 @@ func add_frame():
 	new_fractal_frame_controller.frame_UI_deletion_requested.connect(_on_frame_deletion_requested)
 	new_fractal_frame_controller.frame_UI_selection_requested.connect(_on_frame_UI_selection_requested)
 	#initializes the frame controller to connect to the frame
-	new_fractal_frame_controller.initialize(main_viewport, new_fractal_frame, new_fractal_frame_UI)
+	new_fractal_frame_controller.initialize(drawing_viewport, new_fractal_frame, new_fractal_frame_UI)
 	
 	#increment the frame index for next created frame
 	frame_index += 1

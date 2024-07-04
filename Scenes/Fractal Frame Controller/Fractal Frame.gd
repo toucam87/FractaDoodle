@@ -30,8 +30,7 @@ func update_texture():
 	viewport_texture = get_viewport().get_texture()
 	fractal_sprite.texture = ImageTexture.create_from_image( viewport_texture.get_image() )
 
-#TODO have modulate of fractal frame sprite be a property that can be changed through UI since it changes the level of fading/detail visible on final image 
-# with a really cool effect
+
 func change_opacity(_opacity: float):
 	fractal_sprite.self_modulate.a = _opacity
 

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm401jctnku7k"]
+
+[ext_resource type="Script" path="res://Scenes/recording_manager.gd" id="1_ch2h0"]
+
+[node name="Recording Manager" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ch2h0")
+
+[node name="SavePNGFileDialog" type="FileDialog" parent="."]
+initial_position = 2
+size = Vector2i(800, 600)
+ok_button_text = "Save"
+access = 2
+filters = PackedStringArray("*.png")
+use_native_dialog = true
+
+[connection signal="file_selected" from="SavePNGFileDialog" to="." method="_on_save_png_file_dialog_file_selected"]

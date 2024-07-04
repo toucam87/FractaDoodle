@@ -15,7 +15,7 @@ var stroke_opacity := 0.6
 var eraser_thickness := 50.0
 var eraser_opacity := 1.0
 
-#TODO have UI control the config of strokes
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("left click"):
 		new_stroke = stroke_packed_scene.instantiate() as Stroke
