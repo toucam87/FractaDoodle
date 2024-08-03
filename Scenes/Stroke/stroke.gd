@@ -20,14 +20,14 @@ var is_eraser := false
 var eraser_data : EraserLineData
 #signal sent whenever we are erasing, so that other strokes can listen to it
 signal erasing(_sender : Stroke)
-
+signal self_destructing(_sender : Stroke)
 
 
 
 func _ready() -> void:
 	curve = Curve2D.new()
 
-
+#this function is used by the drawing manager to configurate the stroke that is about to appear.
 func configurate(_color : Color, _thickness : float, _opacity : float, _main_viewport: SubViewport,  _eraser : bool = false):
 	thickness = _thickness
 	color = _color
@@ -44,6 +44,8 @@ func configurate(_color : Color, _thickness : float, _opacity : float, _main_vie
 		eraser_data = EraserLineData.new()
 		eraser_data.configurate(thickness, opacity, points_to_draw)
 
+
+#where all the point calculations happen. 
 func _input(_event: InputEvent) -> void:
 	if (Mouse.left_click_pressed or Mouse.right_click_pressed) and is_painting:
 			control_points.append(Mouse.mouse_pos)
@@ -58,7 +60,6 @@ func _input(_event: InputEvent) -> void:
 	##drawing circles with varying thicknesses
 	#for i in points_to_draw.size():
 		#draw_circle(points_to_draw[i], varying_thicknesses[points_to_draw[i]], color)
-
 	# drawing just the control points
 	#for i in control_points.size():
 		#draw_circle(control_points[i], varying_thicknesses[control_points[i]], Color.BLACK)
@@ -133,8 +134,14 @@ func extrapolate_control_points():
 				 varying_thicknesses[points_to_draw[index2]],
 				 1.0 * (t - index1) / (index2 - index1))
 
+
 #I call this function adopt, because it doesn't instantiate it, it just adds it as a child
+#this is what is used to add the eraser line to each existing brush stroke underneath
 func adopt_eraser_line(_eraser_line : EraserLine):
 	sub_viewport.add_child(_eraser_line)
 
-
+#signals the manager before self-destructing
+func self_destruct():
+	self_destructing.emit(self)
+	queue_free()
+	
