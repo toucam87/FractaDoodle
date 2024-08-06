@@ -11,6 +11,9 @@ var new_stroke : Stroke
 signal stroke_created(_stroke: Stroke)
 #connects to history manager
 signal brush_stroke_completed(_stroke : Stroke)
+signal eraser_stroke_completed(_eraser_stroke : Stroke)
+signal paint_cleared(_strokes_to_clear : Array)
+
 
 var stroke_color := Color.BLUE
 var stroke_thickness := 12.0
@@ -48,12 +51,31 @@ func _input(event: InputEvent) -> void:
 			new_eraser_line.get_data(new_stroke.eraser_data)
 			#places the instantiated eraserstroke under the stroke's subviewport
 			non_eraser_strokes[i].adopt_eraser_line(new_eraser_line)
+			#updates the list of eraserlines in the main eraser stroke
+			new_stroke.eraser_lines.append(new_eraser_line)
 		
 		
 	if event.is_action_released("right click"):
 		new_stroke.is_painting = false
+		eraser_stroke_completed.emit(new_stroke)
 		new_stroke = null
+		
 
+func clear_paint(_strokes_to_clear):
+	for stroke in _strokes_to_clear:
+		stroke.visible = false
+
+	
+
+func undo_clear_paint(_cleared_strokes):
+	for stroke in _cleared_strokes:
+		stroke.visible = true
+
+
+func delete_all_paint():
+	for stroke in get_children():
+		non_eraser_strokes.erase(stroke)
+		stroke.queue_free()
 
 
 func _on_brush_color_picker_color_changed(color: Color) -> void:
@@ -72,8 +94,12 @@ func _on_eraser_size_h_slider_value_changed(value: float) -> void:
 
 #clear action
 func _on_clear_paint_button_up() -> void:
-	for stroke in get_children():
-		stroke.visible = false
+	#filters all the stroke children that are currently active
+	var strokes_to_clear = get_children().filter(func(stroke): return stroke.visible)
+	clear_paint(strokes_to_clear)
+	paint_cleared.emit(strokes_to_clear)
+
+
 
 #when a brushtroke is deleted because it was undone and overwritten, we remove it from the list of non eraser strokes before deleting it
 func _on_stroke_self_destruct(_stroke):

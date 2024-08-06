@@ -2,6 +2,7 @@ class_name HistoryEntry
 extends Resource
 
 var object
+var manager
 var undone := false
 
 

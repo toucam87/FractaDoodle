@@ -1,25 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://b17nudjh5g4lc"]
+[gd_scene load_steps=8 format=3 uid="uid://b17nudjh5g4lc"]
 
 [ext_resource type="Theme" uid="uid://c0720y8vgjxxc" path="res://Textures/main canvas theme.tres" id="1_hxnaf"]
 [ext_resource type="PackedScene" uid="uid://dygiuca7oufti" path="res://Scenes/History/history_manager.tscn" id="1_ksqxw"]
 [ext_resource type="PackedScene" uid="uid://bgucji8to1y0s" path="res://Scenes/UI/ui.tscn" id="2_ce8cf"]
-[ext_resource type="Script" path="res://Scenes/SubviewportBackground.gd" id="2_dp4hk"]
 [ext_resource type="PackedScene" uid="uid://bj81km20q76h1" path="res://Scenes/drawing_manager.tscn" id="2_univ7"]
 [ext_resource type="PackedScene" uid="uid://dm401jctnku7k" path="res://Scenes/recording_manager.tscn" id="3_hjfn0"]
+[ext_resource type="PackedScene" uid="uid://3j1us00nxxuo" path="res://Scenes/subviewport_background.tscn" id="5_6rew5"]
 [ext_resource type="PackedScene" uid="uid://wsx0h52o5f5" path="res://Scenes/Fractal Frame Controller/fractal_frame_manager.tscn" id="6_snk8a"]
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cm5dr"]
-blend_mode = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0vx0k"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="Theme" id="Theme_o61ju"]
-Panel/styles/panel = SubResource("StyleBoxFlat_0vx0k")
 
 [node name="Main Canvas Layer" type="CanvasLayer"]
 
@@ -48,15 +35,7 @@ handle_input_locally = false
 size = Vector2i(1600, 1080)
 render_target_update_mode = 4
 
-[node name="SubviewportBackground" type="Panel" parent="Canvas viewport Container/Canvas subviewport"]
-z_as_relative = false
-material = SubResource("CanvasItemMaterial_cm5dr")
-custom_minimum_size = Vector2(1600, 1080)
-offset_right = 1600.0
-offset_bottom = 1080.0
-mouse_filter = 2
-theme = SubResource("Theme_o61ju")
-script = ExtResource("2_dp4hk")
+[node name="SubviewportBackground" parent="Canvas viewport Container/Canvas subviewport" instance=ExtResource("5_6rew5")]
 
 [node name="Drawing Viewport Container" type="SubViewportContainer" parent="Canvas viewport Container/Canvas subviewport"]
 offset_right = 1600.0
@@ -78,7 +57,9 @@ z_as_relative = false
 [connection signal="value_changed" from="UI/MarginContainer/Main VBox container/Opacity HSlider" to="Canvas viewport Container/Canvas subviewport/Drawing Viewport Container/Drawing Viewport/DrawingManager" method="_on_opacity_h_slider_value_changed"]
 [connection signal="value_changed" from="UI/MarginContainer/Main VBox container/BrushSize HSlider" to="Canvas viewport Container/Canvas subviewport/Drawing Viewport Container/Drawing Viewport/DrawingManager" method="_on_brush_size_h_slider_value_changed"]
 [connection signal="value_changed" from="UI/MarginContainer/Main VBox container/EraserSize HSlider" to="Canvas viewport Container/Canvas subviewport/Drawing Viewport Container/Drawing Viewport/DrawingManager" method="_on_eraser_size_h_slider_value_changed"]
+[connection signal="button_down" from="UI/MarginContainer/Main VBox container/Background ColorPickerButton" to="Canvas viewport Container/Canvas subviewport/SubviewportBackground" method="_on_background_color_picker_button_button_down"]
 [connection signal="color_changed" from="UI/MarginContainer/Main VBox container/Background ColorPickerButton" to="Canvas viewport Container/Canvas subviewport/SubviewportBackground" method="_on_background_color_picker_button_color_changed"]
+[connection signal="popup_closed" from="UI/MarginContainer/Main VBox container/Background ColorPickerButton" to="Canvas viewport Container/Canvas subviewport/SubviewportBackground" method="_on_background_color_picker_button_popup_closed"]
 [connection signal="button_up" from="UI/MarginContainer/Main VBox container/Undo_Redo container/Undo" to="History Manager" method="_on_undo_button_up"]
 [connection signal="button_up" from="UI/MarginContainer/Main VBox container/Undo_Redo container/Redo" to="History Manager" method="_on_redo_button_up"]
 [connection signal="button_up" from="UI/MarginContainer/Main VBox container/Clear_reset container/Clear Paint" to="Canvas viewport Container/Canvas subviewport/Drawing Viewport Container/Drawing Viewport/DrawingManager" method="_on_clear_paint_button_up"]

@@ -35,9 +35,13 @@ func _gui_input(event: InputEvent) -> void:
 		calculate_corner_local_position()
 		calculate_local_pivot_point()
 		calculate_local_diagonal()
+		#sends signal to manager
+		fractal_frame_controller.frame_change_initiated.emit(fractal_frame_controller)
 		
-	if event.is_action_released("left click"):
+	if event.is_action_released("left click") and is_dragging:
 		is_dragging = false
+		#sends signal to manager
+		fractal_frame_controller.frame_change_completed.emit(fractal_frame_controller)
 
 	
 	
@@ -76,7 +80,7 @@ func calculate_local_pivot_point():
 			local_pivot_point = Vector2(0,0)
 	#print("pivot " + str(local_pivot_point))
 
-#FIXTHIS 
+
 func calculate_drag_local_position_from_pivot():
 	drag_canvas_translation = canvas_mouse_pos - start_drag_position
 	drag_local_translation = drag_canvas_translation.rotated(- frame_start_angle)

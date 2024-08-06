@@ -18,6 +18,7 @@ var max_velocity = 500.0
 var min_thickness_percent = 0.6
 var is_eraser := false
 var eraser_data : EraserLineData
+var eraser_lines : Array[EraserLine]
 #signal sent whenever we are erasing, so that other strokes can listen to it
 signal erasing(_sender : Stroke)
 signal self_destructing(_sender : Stroke)

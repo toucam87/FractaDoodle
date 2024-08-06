@@ -2,8 +2,10 @@ extends Control
 class_name FractalFrameController
 
 signal frame_changed(emitter : FractalFrameController)
-signal frame_UI_deletion_requested(emitter : FractalFrameController)
-signal frame_UI_selection_requested(emitter : FractalFrameController)
+signal frame_change_initiated(emitter: FractalFrameController)
+signal frame_change_completed(emitter: FractalFrameController)
+signal frame_deletion_requested(emitter : FractalFrameController)
+signal frame_selection_requested(emitter : FractalFrameController)
 @export var vertically_flipped := false
 @export var horizontally_flipped := false
 var selected := false
@@ -22,6 +24,7 @@ func initialize(_viewport : SubViewport, _fractal_frame : FractalFrame, _fractal
 	initialize_size(_viewport.size, 0.5)
 	initialize_position(Vector2(450.0, 270.0))
 	publish_change()
+
 
 func publish_change():
 	frame_changed.emit(self)
@@ -59,10 +62,20 @@ func flip_horizontally():
 	horizontally_flipped = !horizontally_flipped
 	publish_change()
 
+func change_to_state(_state : FractalFrameData):
+	position = _state.ff_position
+	size = _state.ff_size
+	rotation = _state.ff_rotation
+	horizontally_flipped = _state.ff_horizontal_flip
+	vertically_flipped = _state.ff_vertical_flip
+	publish_change()
+	
+
+
 func _on_frame_UI_label_button_up():
-	frame_UI_selection_requested.emit(self)
+	frame_selection_requested.emit(self)
 
 func _on_frame_UI_delete_button_up():
-	frame_UI_deletion_requested.emit(self)
+	frame_deletion_requested.emit(self)
 
 

@@ -18,11 +18,17 @@ func _gui_input(event: InputEvent) -> void:
 		is_dragging = true
 		start_drag_position = Mouse.mouse_pos
 		frame_start_position = fractal_frame_controller.position
+		#sends signal to manager
+		fractal_frame_controller.frame_change_initiated.emit(fractal_frame_controller)
 	
-	if event.is_action_released("left click"):
+	if event.is_action_released("left click") and is_dragging:
 		is_dragging = false
+		#sends signal to manager
+		fractal_frame_controller.frame_change_completed.emit(fractal_frame_controller)
+		
 
 	if event.is_action_released("right click"):
+		fractal_frame_controller.frame_change_initiated.emit(fractal_frame_controller)
 		match side_enum:
 			SIDE_LEFT:
 				fractal_frame_controller.flip_horizontally()
@@ -32,7 +38,7 @@ func _gui_input(event: InputEvent) -> void:
 				fractal_frame_controller.flip_vertically()
 			SIDE_BOTTOM:
 				fractal_frame_controller.flip_vertically()
-			
+		fractal_frame_controller.frame_change_completed.emit(fractal_frame_controller)
 	
 
 func _process(_delta: float) -> void:
